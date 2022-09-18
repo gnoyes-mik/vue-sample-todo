@@ -41,7 +41,7 @@ export default {
         todos.value.push({
           id: Date.now(),
           subject: todo.value,
-          completed: true,
+          completed: false,
         });
         hasError.value = false;
         todo.value = '';
