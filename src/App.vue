@@ -1,17 +1,7 @@
 <template>
   <div class="container">
     <h2>To-Do List</h2>
-    <form @submit.prevent="onSubmit">
-      <div class="d-flex">
-        <div class="flex-grow-1 mr-2">
-          <input class="form-control" type="text" v-model="todo" placeholder="Type new to-do">
-        </div>
-        <div>
-          <button class="btn btn-primary" type="submit">Add</button>
-        </div>
-      </div>
-      <div v-show="hasError" style="color: red">This field cannot be empty</div>
-    </form>
+    <todoSimpleForm @add-todo="addTodo"/>
     <div v-if="!todos.length">
       Todo list is empty!
     </div>
@@ -33,40 +23,29 @@
 
 <script>
 import {ref} from 'vue';
+import todoSimpleForm from "@/components/TodoSimpleForm";
 
 export default {
+  components: {
+    todoSimpleForm
+  },
   setup() {
-    const todo = ref('');
     const todos = ref([]);
-    const hasError = ref(false);
     const todoStyle = ref({
       textDecoration: 'line-through',
       color: 'gray'
     });
-    const onSubmit = () => {
-      if (todo.value === '') {
-        hasError.value = true;
-      }
-      else {
-        todos.value.push({
-          id: Date.now(),
-          subject: todo.value,
-          completed: false,
-        });
-        hasError.value = false;
-        todo.value = '';
-      }
+    const addTodo = (todo) => {
+      todos.value.push(todo);
     };
     const deleteTodo = (index) => {
       todos.value.splice(index, 1);
     };
 
     return {
-      todo,
       todos,
-      hasError,
       todoStyle,
-      onSubmit,
+      addTodo,
       deleteTodo,
     };
   }
