@@ -12,11 +12,7 @@
       </div>
       <div v-show="hasError" style="color: red">This field cannot be empty!</div>
     </form>
-    <div
-        v-for="todo in todos"
-        :key="todo.id"
-        class="card mt-2"
-    >
+    <div v-for="todo in todos" :key="todo.id" class="card mt-2">
       <div class="card-body p-2">
         {{ todo.subject }}
       </div>
