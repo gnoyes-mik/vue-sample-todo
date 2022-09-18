@@ -10,11 +10,16 @@
           <button class="btn btn-primary" type="submit">Add</button>
         </div>
       </div>
-      <div v-show="hasError" style="color: red">This field cannot be empty!</div>
+      <div v-show="hasError" style="color: red">This field cannot be empty</div>
     </form>
     <div v-for="todo in todos" :key="todo.id" class="card mt-2">
       <div class="card-body p-2">
-        {{ todo.subject }}
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" v-model="todo.completed">
+          <label class="form-check-label">
+            {{ todo.subject }}
+          </label>
+        </div>
       </div>
     </div>
   </div>
@@ -35,16 +40,18 @@ export default {
       else {
         todos.value.push({
           id: Date.now(),
-          subject: todo.value
+          subject: todo.value,
+          completed: true,
         });
         hasError.value = false;
+        todo.value = '';
       }
     };
     return {
       todo,
       todos,
-      hasError,
       onSubmit,
+      hasError,
     };
   }
 };
